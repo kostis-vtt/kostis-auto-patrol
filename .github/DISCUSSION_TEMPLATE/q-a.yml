@@ -1,0 +1,15 @@
+# The form for new posts in Discussions → Q&A (a form's file name is its category's slug).
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What are you trying to do, and what have you tried so far?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: This module's and Foundry's, and your game system's if it might matter.
+      placeholder: 1.2.1 on Foundry 14.369, dnd5e 5.3.3

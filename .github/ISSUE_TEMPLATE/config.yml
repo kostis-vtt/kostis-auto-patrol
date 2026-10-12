@@ -1,0 +1,9 @@
+# The New issue page: the bug form only, plus links to Discussions for questions and ideas.
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/kostis-vtt/kostis-auto-patrol/discussions/categories/q-a
+    about: How to do something, or help setting it up.
+  - name: Suggest an idea
+    url: https://github.com/kostis-vtt/kostis-auto-patrol/discussions/categories/ideas
+    about: New features and improvements, where others can upvote them.

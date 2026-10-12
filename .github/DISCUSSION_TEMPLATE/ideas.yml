@@ -1,0 +1,19 @@
+# The form for new posts in Discussions → Ideas (a form's file name is its category's slug).
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: What would you like the module to do?
+    validations:
+      required: true
+  - type: textarea
+    id: use
+    attributes:
+      label: When would you use it?
+      description: The scene, encounter or moment at your table you have in mind.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Sketches, screenshots, or another module that does something similar.

@@ -1,0 +1,88 @@
+# The form behind New issue → Bug report.
+name: Bug report
+description: Something in Kostis's Auto-Patrol System doesn't work as it should.
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. For questions and ideas, use [Discussions](https://github.com/kostis-vtt/kostis-auto-patrol/discussions) instead.
+
+        Not sure which of the Kostis modules is at fault? Report it here anyway; the issue can be moved.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What went wrong?
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      description: Starting from a freshly loaded world, if you can.
+      placeholder: |
+        1.
+        2.
+        3.
+  - type: input
+    id: module-version
+    attributes:
+      label: Module version
+      description: Shown next to the module in Manage Modules.
+      placeholder: 1.2.1
+    validations:
+      required: true
+  - type: input
+    id: foundry-version
+    attributes:
+      label: Foundry version
+      description: Shown in the Settings tab of the sidebar.
+      placeholder: '14.369'
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Game system and its version
+      placeholder: dnd5e 5.3.3
+  - type: input
+    id: client
+    attributes:
+      label: Desktop app or browser
+      placeholder: Foundry desktop app, or a browser such as Chrome
+  - type: dropdown
+    id: who
+    attributes:
+      label: Who sees the problem?
+      options:
+        - The GM
+        - Players
+        - Everyone
+        - Not sure
+  - type: dropdown
+    id: alone
+    attributes:
+      label: Does it still happen with every other module turned off?
+      description: Leave on only the Kostis modules involved.
+      options:
+        - Yes, it still happens
+        - No, only with other modules on
+        - I haven't checked
+  - type: textarea
+    id: modules
+    attributes:
+      label: Other active modules
+      description: Especially the other Kostis modules, with their versions.
+  - type: textarea
+    id: console
+    attributes:
+      label: Errors in the console
+      description: Press F12 (Cmd+Option+I on a Mac), open the Console tab, make the problem happen, and paste anything in red.
+      render: text
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or a short video
+      description: Drag the files into this box.
