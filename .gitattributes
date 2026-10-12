@@ -1,0 +1,11 @@
+# Keep text files with LF line endings in the repository and in checkouts
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.webp binary
+*.gif binary
+*.ogg binary
+*.mp3 binary
+*.woff binary
+*.woff2 binary
+*.zip binary

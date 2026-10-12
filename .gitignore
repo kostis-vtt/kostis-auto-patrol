@@ -1,0 +1,16 @@
+# Release builds
+*.zip
+release-notes.md
+
+# Local test output
+tests/out/
+tests/preview/
+node_modules/
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini

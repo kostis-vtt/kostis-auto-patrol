@@ -1,0 +1,58 @@
+{
+  "id": "kostis-auto-patrol",
+  "title": "Kostis's Auto-Patrol System",
+  "description": "Scans your battle map like a pair of eyes: finds the walkable floor from the art, proposes walls, splits the map into rooms and doorways and builds a navigation mesh. Then it generates patrols for your NPCs (rounds, perimeter walks, pacing, guard posts, wandering) that route around every wall, at each creature's own speed. Patrollers keep watch with a real field of view and line of sight, and stop and stare, chase or raise the alarm. Part of Kostis's Flying Paths.",
+  "version": "1.2.1",
+  "authors": [
+    {
+      "name": "Kostis",
+      "url": "https://github.com/kostis-vtt"
+    }
+  ],
+  "url": "https://github.com/kostis-vtt/kostis-auto-patrol",
+  "manifest": "https://github.com/kostis-vtt/kostis-auto-patrol/releases/latest/download/module.json",
+  "download": "https://github.com/kostis-vtt/kostis-auto-patrol/releases/download/v1.2.1/module.zip",
+  "bugs": "https://github.com/kostis-vtt/kostis-auto-patrol/issues",
+  "readme": "https://github.com/kostis-vtt/kostis-auto-patrol/blob/main/README.md",
+  "changelog": "https://github.com/kostis-vtt/kostis-auto-patrol/blob/main/CHANGELOG.md",
+  "license": "MIT",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "styles": [
+    "styles/kap.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "relationships": {
+    "requires": [
+      {
+        "id": "kostis-flying-paths",
+        "type": "module",
+        "reason": "The Kostis's Flying Paths hub provides the launcher, map tools and shared services.",
+        "compatibility": {
+          "minimum": "1.2.0"
+        },
+        "manifest": "https://github.com/kostis-vtt/kostis-flying-paths/releases/latest/download/module.json"
+      },
+      {
+        "id": "kostis-actual-animator",
+        "type": "module",
+        "reason": "Patrols are animator animations: precise, smooth, sub-pixel movement along the generated routes.",
+        "compatibility": {
+          "minimum": "1.3.0"
+        },
+        "manifest": "https://github.com/kostis-vtt/kostis-actual-animator/releases/latest/download/module.json"
+      }
+    ]
+  }
+}

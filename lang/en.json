@@ -1,0 +1,79 @@
+{
+  "KAP": {
+    "Patrol": "Patrol",
+    "Tools": {
+      "Planner": "Patrol planner",
+      "Floor": "Paint floor hints (click or drag; right-click erases)",
+      "Wall": "Paint wall hints (click or drag; right-click erases)",
+      "Erase": "Erase hints (click or drag)"
+    },
+    "Undo": {
+      "PaintFloor": "Paint floor hint",
+      "PaintWall": "Paint wall hint",
+      "Erase": "Erase hints",
+      "ClearHints": "Clear hints",
+      "CreateWalls": "Create {count} walls",
+      "RemoveWalls": "Remove {count} generated walls",
+      "Generate": "Generate {count} patrol(s)",
+      "Remove": "Remove {count} patrol(s)"
+    },
+    "Temp": {
+      "Chase": "Chase",
+      "Investigate": "Investigate",
+      "Return": "Back to route"
+    },
+    "Chat": {
+      "Speaker": "Patrols",
+      "Spotted": "<strong>{npc}</strong> spotted <strong>{pc}</strong>!"
+    },
+    "Settings": {
+      "watch": {
+        "Name": "Patrols keep watch",
+        "Hint": "Patrolling NPCs notice player characters in their field of view (with line of sight through walls) and react."
+      },
+      "alertSeconds": {
+        "Name": "Stay alert for (seconds)",
+        "Hint": "How long an NPC stays alert after losing sight of an intruder, before walking back to its route."
+      },
+      "chaseSpeed": {
+        "Name": "Chase speed",
+        "Hint": "How much faster than their patrol pace NPCs move when chasing."
+      },
+      "alarmRadius": {
+        "Name": "Alarm radius (squares)",
+        "Hint": "Patrols this close to one that raises the alarm come to investigate."
+      },
+      "whisper": {
+        "Name": "Whisper sightings to the GM",
+        "Hint": "A private chat message when a patrol spots someone."
+      },
+      "pauseOnSpot": {
+        "Name": "Pause the game on a sighting",
+        "Hint": "Pause the game whenever a patrol spots a player character."
+      },
+      "pauseInCombat": {
+        "Name": "Patrols stop in combat",
+        "Hint": "When combat starts patrols stop; when it ends they walk back to their routes and carry on."
+      }
+    },
+    "Keybindings": {
+      "OpenPlanner": "Open the patrol planner"
+    },
+    "Info": {
+      "Scanned": "Scan done: {floor}% floor, {walls} new walls proposed, {rooms} rooms.",
+      "WallsCreated": "Created {count} walls.",
+      "WallsRemoved": "Removed {count} generated walls.",
+      "Generated": "Generated {count} patrol(s)."
+    },
+    "Warn": {
+      "NoNPCs": "No NPCs to patrol with these settings.",
+      "SelectTokens": "Select one or more tokens first.",
+      "NoWayBack": "{name} can't find a way back to its route (a door closed behind it?). It waits where it is and tries again every few seconds."
+    },
+    "Error": {
+      "NoHub": "Kostis's Auto-Patrol System needs the Kostis's Flying Paths module. Enable it in Manage Modules.",
+      "NoAnimator": "Kostis's Auto-Patrol System moves NPCs with Kostis's Actual Animator. Enable it in Manage Modules.",
+      "Tainted": "The map image can't be read (it is served from another website). Upload it to your Foundry data folder and try again."
+    }
+  }
+}

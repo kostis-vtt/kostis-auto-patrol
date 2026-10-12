@@ -1,0 +1,166 @@
+<div class="kap-root">
+  <nav class="kfp-tabs">
+    {{#each tabs}}
+    <button type="button" class="{{#if active}}active{{/if}}" data-action="switchTab" data-tab="{{key}}"><i class="{{icon}}" inert></i> {{label}}</button>
+    {{/each}}
+    {{#if busy}}<span class="kap-busy"><i class="fa-solid fa-spinner fa-spin" inert></i> Working…</span>{{/if}}
+    <button type="button" class="kfp-btn kfp-small kap-undo" data-action="undo" {{#unless undo}}disabled{{/unless}} data-tooltip="{{#if undo}}Undo: {{undo}} (Ctrl+Z){{else}}Nothing to undo{{/if}}"><i class="fa-solid fa-rotate-left" inert></i> Undo</button>
+  </nav>
+
+  <div class="kap-scroll">
+  {{#unless scene}}
+    <p class="kfp-hint">Open a scene first.</p>
+  {{else}}
+
+  {{#if (eq tab "scan")}}
+  <section class="kap-section">
+    <div class="kap-intro">
+      <i class="fa-solid fa-eye" inert></i>
+      <p>The scan reads the map art (background and floor tiles), finds the walkable floor, proposes walls and splits the map into rooms and doorways. Tokens on the map help: wherever one stands is floor.</p>
+    </div>
+    <div class="kap-row">
+      <button type="button" class="kfp-btn kfp-primary kfp-big" data-action="scan" {{#if busy}}disabled{{/if}}><i class="fa-solid fa-satellite-dish" inert></i> {{#if scanned}}Scan again{{else}}Scan the map{{/if}}</button>
+    </div>
+
+    {{#if stats}}
+    <div class="kap-stats">
+      <div><strong>{{stats.floor}}%</strong><span>floor</span></div>
+      <div><strong>{{stats.rooms}}</strong><span>rooms</span></div>
+      <div><strong>{{stats.doorways}}</strong><span>doorways</span></div>
+      <div><strong>{{stats.proposed}}</strong><span>new walls</span></div>
+    </div>
+    <h4 class="kfp-subhead">Materials found</h4>
+    <div class="kap-clusters">
+      {{#each clusters}}
+      <div class="kap-cluster {{#if floor}}floor{{/if}}" data-tooltip="{{reason}}">
+        <span class="kap-swatch" style="background: {{swatch}}"></span>
+        <span>{{#if floor}}<i class="fa-solid fa-shoe-prints" inert></i> floor{{else}}<i class="fa-solid fa-ban" inert></i> blocked{{/if}}</span>
+        <span class="kfp-muted">{{share}}%</span>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    <h4 class="kfp-subhead">Show on the map</h4>
+    <div class="kap-toggles">
+      <label><input type="checkbox" name="overlay.mask" {{#if overlay.mask}}checked{{/if}}> Floor</label>
+      <label><input type="checkbox" name="overlay.rooms" {{#if overlay.rooms}}checked{{/if}}> Rooms &amp; doorways</label>
+      <label><input type="checkbox" name="overlay.walls" {{#if overlay.walls}}checked{{/if}}> New walls</label>
+      <label><input type="checkbox" name="overlay.routes" {{#if overlay.routes}}checked{{/if}}> Patrol routes</label>
+      <label><input type="checkbox" name="overlay.hints" {{#if overlay.hints}}checked{{/if}}> Hints</label>
+    </div>
+
+    <h4 class="kfp-subhead">Fix mistakes</h4>
+    <p class="kfp-hint">Paint over spots the scan got wrong, then scan again. Right-click with a brush (or use Erase) to remove hints; Ctrl+Z undoes. Hints are saved with the scene.</p>
+    <div class="kap-row">
+      <button type="button" class="kfp-btn" data-action="paintFloor"><i class="fa-solid fa-paintbrush" inert></i> Paint floor</button>
+      <button type="button" class="kfp-btn" data-action="paintWall"><i class="fa-solid fa-paint-roller" inert></i> Paint wall</button>
+      <button type="button" class="kfp-btn" data-action="eraseHints"><i class="fa-solid fa-eraser" inert></i> Erase</button>
+      <button type="button" class="kfp-btn kfp-danger" data-action="clearHints" {{#unless hints}}disabled{{/unless}}><i class="fa-solid fa-trash" inert></i> Clear all ({{hints}})</button>
+    </div>
+
+    <h4 class="kfp-subhead">Walls</h4>
+    <p class="kfp-hint">The scene has {{existing}} movement walls ({{generated}} generated). Patrols always respect walls, generated or drawn by hand.</p>
+    <div class="kap-row">
+      <button type="button" class="kfp-btn kfp-primary" data-action="createWalls" {{#unless stats.proposed}}disabled{{/unless}}><i class="fa-solid fa-block-brick" inert></i> Create {{stats.proposed}} walls</button>
+      <button type="button" class="kfp-btn kfp-danger" data-action="removeWalls" {{#unless generated}}disabled{{/unless}}><i class="fa-solid fa-trash" inert></i> Remove generated walls</button>
+    </div>
+
+    <h4 class="kfp-subhead">Scan settings</h4>
+    {{#each scanFields}}
+    <div class="kfp-field"><label>{{label}}</label>
+      <div class="kfp-range"><input type="range" name="scan.{{key}}" min="{{min}}" max="{{max}}" step="{{step}}" value="{{value}}"><output>{{value}}</output></div>
+    </div>
+    {{/each}}
+    <div class="kfp-field"><label>Map edges</label><label class="kap-check"><input type="checkbox" name="scan.includeEdges" {{#if includeEdges}}checked{{/if}}> wall off floor that runs to the edge of the map</label></div>
+  </section>
+  {{/if}}
+
+  {{#if (eq tab "patrols")}}
+  <section class="kap-section">
+    {{#unless animator}}
+    <p class="kfp-hint"><i class="fa-solid fa-triangle-exclamation" inert></i> Patrols are animator animations: enable Kostis's Actual Animator.</p>
+    {{/unless}}
+    <h4 class="kfp-subhead">Who patrols</h4>
+    <div class="kap-toggles">
+      <label><input type="checkbox" name="default.hostile" {{#if defaults.hostile}}checked{{/if}}> Hostile</label>
+      <label><input type="checkbox" name="default.neutral" {{#if defaults.neutral}}checked{{/if}}> Neutral</label>
+      <label><input type="checkbox" name="default.friendly" {{#if defaults.friendly}}checked{{/if}}> Friendly</label>
+    </div>
+    <div class="kap-npcs">
+      {{#each npcs}}
+      <div class="kap-npc" data-token="{{id}}">
+        <img src="{{img}}" alt="" data-action="panTo">
+        <div class="kap-npc-name">
+          <strong>{{name}}</strong>
+          <span class="kfp-muted"><span class="kap-disp-{{disposition}}">{{disposition}}</span>{{#if patrol}} · {{patrol}}{{/if}}{{#if playing}} · <i class="fa-solid fa-play" inert data-tooltip="Patrolling"></i>{{/if}}</span>
+        </div>
+        <select name="choice.{{id}}">{{#each choices}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+      </div>
+      {{else}}
+      <p class="kfp-hint">No NPCs of these kinds on this scene.</p>
+      {{/each}}
+    </div>
+
+    <h4 class="kfp-subhead">Routine</h4>
+    <div class="kfp-field"><label>Default routine</label>
+      <select name="default.strategy">{{#each defaultStrategies}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+    </div>
+    <div class="kfp-field"><label>Speed ×</label>
+      <div class="kfp-range"><input type="range" name="default.speed" min="0.25" max="3" step="0.05" value="{{defaults.speed}}"><output>{{defaults.speed}}</output></div>
+    </div>
+    <div class="kfp-field"><label>Squads within (sq)</label>
+      <div class="kfp-range"><input type="range" name="default.squad" min="0" max="5" step="0.1" value="{{defaults.squad}}"><output>{{defaults.squad}}</output></div>
+    </div>
+    <h4 class="kfp-subhead">When they spot someone</h4>
+    <div class="kfp-field"><label>They</label>
+      <select name="default.response">{{#each responses}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+    </div>
+    <div class="kfp-field"><label>Sight range (sq)</label><input type="number" name="default.range" min="1" max="60" step="1" value="{{defaults.range}}"></div>
+    <div class="kfp-field"><label>Field of view (°)</label><input type="number" name="default.cone" min="10" max="360" step="5" value="{{defaults.cone}}"></div>
+
+    <div class="kap-row kap-sticky">
+      <button type="button" class="kfp-btn kfp-primary kfp-big" data-action="generateAll" {{#unless animator}}disabled{{/unless}} {{#if busy}}disabled{{/if}}><i class="fa-solid fa-wand-magic-sparkles" inert></i> Generate patrols</button>
+      <button type="button" class="kfp-btn" data-action="generateSelected" {{#unless animator}}disabled{{/unless}} data-tooltip="Only the selected tokens"><i class="fa-solid fa-hand-pointer" inert></i> Selected</button>
+    </div>
+
+    {{#if hasPatrols}}
+    <h4 class="kfp-subhead">Patrols on this scene</h4>
+    <div class="kap-row">
+      <button type="button" class="kfp-btn" data-action="startAll"><i class="fa-solid fa-play" inert></i> Start all</button>
+      <button type="button" class="kfp-btn" data-action="stopAll"><i class="fa-solid fa-stop" inert></i> Stop all</button>
+      <button type="button" class="kfp-btn kfp-danger" data-action="removeAll"><i class="fa-solid fa-trash" inert></i> Remove all</button>
+    </div>
+    <div class="kap-patrols">
+      {{#each patrols}}
+      <div class="kap-patrol" data-anim="{{animId}}" style="--kap-color: {{color}}">
+        <i class="{{icon}}" inert></i>
+        <div class="kap-patrol-name"><strong>{{name}}</strong><span class="kfp-muted">{{label}} · {{count}} token{{#unless (eq count 1)}}s{{/unless}}</span></div>
+        <select name="patrol.{{animId}}.response" data-tooltip="When they spot someone">{{#each responses}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+        <input type="number" name="patrol.{{animId}}.range" value="{{range}}" min="1" max="60" step="1" data-tooltip="Sight range (squares)">
+        <button type="button" class="kfp-icon-btn kfp-danger" data-action="removePatrol" data-tooltip="Remove"><i class="fa-solid fa-trash" inert></i></button>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </section>
+  {{/if}}
+
+  {{#if (eq tab "behaviour")}}
+  <section class="kap-section">
+    <div class="kap-intro">
+      <i class="fa-solid fa-eye" inert></i>
+      <p>Patrolling NPCs look where they face: a cone of vision with a real line of sight through your walls. Player characters inside it are spotted.</p>
+    </div>
+    <div class="kfp-field"><label>Keep watch</label><label class="kap-check"><input type="checkbox" name="setting.watch" {{#if settings.watch}}checked{{/if}}> patrols notice player characters</label></div>
+    <div class="kfp-field"><label>Stay alert for (s)</label><input type="number" name="setting.alertSeconds" min="2" max="120" step="1" value="{{settings.alertSeconds}}"></div>
+    <div class="kfp-field"><label>Chase speed ×</label><input type="number" name="setting.chaseSpeed" min="1" max="5" step="0.1" value="{{settings.chaseSpeed}}"></div>
+    <div class="kfp-field"><label>Alarm reaches (sq)</label><input type="number" name="setting.alarmRadius" min="1" max="60" step="1" value="{{settings.alarmRadius}}"></div>
+    <div class="kfp-field"><label>Tell me</label><label class="kap-check"><input type="checkbox" name="setting.whisper" {{#if settings.whisper}}checked{{/if}}> whisper the GM who spotted whom</label></div>
+    <div class="kfp-field"><label>Pause the game</label><label class="kap-check"><input type="checkbox" name="setting.pauseOnSpot" {{#if settings.pauseOnSpot}}checked{{/if}}> when someone is spotted</label></div>
+    <div class="kfp-field"><label>In combat</label><label class="kap-check"><input type="checkbox" name="setting.pauseInCombat" {{#if settings.pauseInCombat}}checked{{/if}}> patrols stop, and walk back to their routes afterwards</label></div>
+  </section>
+  {{/if}}
+  {{/unless}}
+  </div>
+</div>
